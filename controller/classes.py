@@ -82,13 +82,14 @@ def samples():
     """
 
     class_uri_of_register_items = 'http://pid.geoscience.gov.au/def/ont/igsn#Sample'
+    print(class_uri_of_register_items)
 
     r = SampleRegisterRenderer(request,
                          request.url_root,
                          'Sample Register',
                          'A register of Samples',
+                         None,
                          class_uri_of_register_items,
-                         ['http://pid.geoscience.gov.au/'],
                          len(class_uri_of_register_items),
                          conf.REGISTER_BASE_URI
     )

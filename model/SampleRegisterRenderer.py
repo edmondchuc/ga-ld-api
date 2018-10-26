@@ -18,12 +18,24 @@ class SampleRegisterRenderer(RegisterRenderer):
         self._get_details_from_oracle_api(self.page, self.per_page)
 
     def render(self):
+
         return render_template(
-            'class_register.html',
+            self.register_template or 'class_register.html',
             organisation_branding='ga',
             base_uri=self.base_uri,
             class_name=self.uri,
-            register=self.register
+            register=self.register,
+            uri=self.uri,
+            label=self.label,
+            contained_item_classes=self.contained_item_classes,
+            register_items=self.register_items,
+            page=self.page,
+            per_page=self.per_page,
+            first_page=self.first_page,
+            prev_page=self.prev_page,
+            next_page=self.next_page,
+            last_page=self.last_page,
+            super_register=self.super_register,
         )
 
     def _get_details_from_file(self, file_path=None, xml_content=None):
