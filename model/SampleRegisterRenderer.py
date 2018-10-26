@@ -18,7 +18,7 @@ class SampleRegisterRenderer(RegisterRenderer):
         self._get_details_from_oracle_api(self.page, self.per_page)
 
     def render(self):
-
+        print(self.contained_item_classes)
         return render_template(
             self.register_template or 'class_register.html',
             organisation_branding='ga',
