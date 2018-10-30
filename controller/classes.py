@@ -6,10 +6,47 @@ import _config as conf
 from _ldapi.__init__ import LDAPI, LdapiParameterError
 import urllib.parse as uriparse
 import requests
-from model.SampleRegisterRenderer import SampleRegisterRenderer
+from model.sample_register_renderer import SampleRegisterRenderer
+from model.sample_renderer import SampleRenderer
 
 classes = Blueprint('classes', __name__)
 
+
+# @classes.route('/sample/<string:igsn>')
+# def sample(igsn):
+#     """
+#     A single Sample
+#
+#     :return: HTTP Response
+#     """
+#     # lists the views and formats available for a Sample
+#     views_formats = LDAPI.get_classes_views_formats().get(conf.URI_SAMPLE_CLASS)
+#
+#     try:
+#         view, mime_format = LDAPI.get_valid_view_and_format(request, views_formats)
+#
+#         # if alternates model, return this info from file
+#         if view == 'alternates':
+#             instance_uri = conf.URI_SAMPLE_INSTANCE_BASE + igsn
+#             del views_formats['renderer']
+#             return LDAPI.render_alternates_view(
+#                 conf.URI_SAMPLE_CLASS,
+#                 uriparse.quote_plus(conf.URI_SAMPLE_CLASS),
+#                 instance_uri,
+#                 uriparse.quote_plus(instance_uri),
+#                 views_formats,
+#                 request.args.get('_format')
+#             )
+#         else:
+#             from model.sample import Sample
+#             try:
+#                 s = Sample(igsn)
+#                 return s.render(view, mime_format)
+#             except ValueError:
+#                 return render_template('class_sample_no_record.html')
+#
+#     except LdapiParameterError as e:
+#         return LDAPI.client_error_Response(str(e))
 
 @classes.route('/sample/<string:igsn>')
 def sample(igsn):
@@ -18,34 +55,8 @@ def sample(igsn):
 
     :return: HTTP Response
     """
-    # lists the views and formats available for a Sample
-    views_formats = LDAPI.get_classes_views_formats().get(conf.URI_SAMPLE_CLASS)
-
-    try:
-        view, mime_format = LDAPI.get_valid_view_and_format(request, views_formats)
-
-        # if alternates model, return this info from file
-        if view == 'alternates':
-            instance_uri = conf.URI_SAMPLE_INSTANCE_BASE + igsn
-            del views_formats['renderer']
-            return LDAPI.render_alternates_view(
-                conf.URI_SAMPLE_CLASS,
-                uriparse.quote_plus(conf.URI_SAMPLE_CLASS),
-                instance_uri,
-                uriparse.quote_plus(instance_uri),
-                views_formats,
-                request.args.get('_format')
-            )
-        else:
-            from model.sample import Sample
-            try:
-                s = Sample(igsn)
-                return s.render(view, mime_format)
-            except ValueError:
-                return render_template('class_sample_no_record.html')
-
-    except LdapiParameterError as e:
-        return LDAPI.client_error_Response(str(e))
+    s = SampleRenderer(request, conf.URI_SAMPLE_INSTANCE_BASE + igsn, igsn)
+    return s.render()
 
 
 @classes.route('/sample/<string:igsn>/pingback', methods=['GET', 'POST'])
