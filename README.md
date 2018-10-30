@@ -1,3 +1,8 @@
-# Notes
-* Check why root route's nav bar, "Sample Register" is not mapped to "/sample/".
-    * I think this is a mistake. Hardcoding it to "/sample/" now.
+# API
+This is an API consolidated from:
+* https://github.com/GeoscienceAustralia/samples-api
+* https://github.com/GeoscienceAustralia/sites-register
+* https://github.com/GeoscienceAustralia/surveys-api
+
+## TODO
+* Fix the styling for pagination so it doesn't overflow.
