@@ -63,7 +63,7 @@ def samples():
         no_of_samples = int(r.content.decode('utf-8').split('<RECORD_COUNT>')[1].split('</RECORD_COUNT>')[0])
 
         page = request.values.get('page') if request.values.get('page') is not None else 1
-        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 10
+        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 15
         items = _get_samples_items(page, per_page)
 
     except Exception as e:
