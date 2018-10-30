@@ -20,9 +20,8 @@ class SampleRegisterRenderer(RegisterRenderer):
     def render(self):
         # print(self.contained_item_classes)
         return render_template(
-            self.register_template or 'class_register.html',
+            self.register_template or 'register.html',
             organisation_branding='ga',
-            base_uri=self.base_uri,
             class_name=self.uri,
             register=self.register,
             uri=self.uri,

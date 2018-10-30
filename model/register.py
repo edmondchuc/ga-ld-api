@@ -47,7 +47,7 @@ class RegisterRenderer(Renderer):
 
                 return Response(
                     render_template(
-                        'class_register.html',
+                        'register.html',
                         organisation_branding=organisation_branding,
                         base_uri=self.base_uri,
                         class_name=self.uri,

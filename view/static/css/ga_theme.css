@@ -192,3 +192,21 @@ table.pretty th {
     font-weight: bold;
     background-color: #006983;
 }
+
+/* Pagination */
+.pagination {
+    margin: 10px 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.pagination > ul li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+    float: left;
+}
+
+.pagination > ul li.active {
+    font-weight: bold;
+}
