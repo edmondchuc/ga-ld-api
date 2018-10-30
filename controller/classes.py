@@ -13,7 +13,7 @@ from lxml import etree
 classes = Blueprint('classes', __name__)
 
 
-@classes.route('/sample/<string:igsn>')
+@classes.route('/api/sample/<string:igsn>')
 def sample(igsn):
     """
     A single Sample
@@ -24,7 +24,7 @@ def sample(igsn):
     return s.render()
 
 
-@classes.route('/sample/<string:igsn>/pingback', methods=['GET', 'POST'])
+@classes.route('/api/sample/<string:igsn>/pingback', methods=['GET', 'POST'])
 def sample_pingback(igsn):
     if request.method == 'GET':
         return Response(
@@ -49,7 +49,7 @@ def sample_pingback(igsn):
         )
 
 
-@classes.route('/sample/')
+@classes.route('/api/sample/register')
 def samples():
     """
     The Register of Samples

@@ -7,7 +7,7 @@ from flask import Blueprint, render_template
 pages = Blueprint('controller', __name__)
 
 
-@pages.route('/')
+@pages.route('/api/sample')
 def index():
     """
     A basic landing page for this web service
@@ -19,7 +19,7 @@ def index():
     )
 
 
-@pages.route('/page/about')
+@pages.route('/api/sample/about')
 def about():
     return render_template(
         'page_about.html'
