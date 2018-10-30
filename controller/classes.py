@@ -57,16 +57,6 @@ def samples():
     :return: HTTP Response
     """
 
-    # r = SampleRegisterRenderer(request,
-    #                      class_uri_of_register_items,
-    #                      'Sample Register',
-    #                      'A register of Samples',
-    #                      None,
-    #                      class_uri_of_register_items,
-    #                      len(class_uri_of_register_items), #TODO: (Edmond) - not sure if this parameter affects anything? since this parameter is clearly wrong (it's not the total number of items in the dataset)
-    #                      conf.REGISTER_BASE_URI
-    # )
-
     # get the total register count from the XML API
     try:
         r = requests.get(conf.XML_API_URL_TOTAL_COUNT)
