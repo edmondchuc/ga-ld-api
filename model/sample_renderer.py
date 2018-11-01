@@ -10,6 +10,7 @@ import _config as conf
 from controller.oai_datestamp import *
 from .lookups import TERM_LOOKUP
 
+
 class SampleRenderer(Renderer):
     """
                 This class represents a Sample and methods in this class allow a sample to be loaded from GA's internal Oracle

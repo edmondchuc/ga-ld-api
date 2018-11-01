@@ -9,11 +9,12 @@ import pyldapi
 import requests
 from io import BytesIO
 from lxml import etree
+from model.site_renderer import SiteRenderer
 
 classes = Blueprint('classes', __name__)
 
 
-@classes.route('/api/sample/<string:igsn>')
+@classes.route('/sample/<string:igsn>')
 def sample(igsn):
     """
     A single Sample
@@ -24,7 +25,7 @@ def sample(igsn):
     return s.render()
 
 
-@classes.route('/api/sample/<string:igsn>/pingback', methods=['GET', 'POST'])
+@classes.route('/sample/<string:igsn>/pingback', methods=['GET', 'POST'])
 def sample_pingback(igsn):
     if request.method == 'GET':
         return Response(
@@ -49,7 +50,7 @@ def sample_pingback(igsn):
         )
 
 
-@classes.route('/api/sample/register')
+@classes.route('/sample/register')
 def samples():
     """
     The Register of Samples
@@ -60,11 +61,11 @@ def samples():
     # get the total register count from the XML API
     try:
         r = requests.get(conf.XML_API_URL_TOTAL_COUNT)
-        no_of_samples = int(r.content.decode('utf-8').split('<RECORD_COUNT>')[1].split('</RECORD_COUNT>')[0])
+        no_of_items = int(r.content.decode('utf-8').split('<RECORD_COUNT>')[1].split('</RECORD_COUNT>')[0])
 
         page = request.values.get('page') if request.values.get('page') is not None else 1
         per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 15
-        items = _get_samples_items(page, per_page)
+        items = _get_items(page, per_page, "IGSN")
 
     except Exception as e:
         print(e)
@@ -76,16 +77,25 @@ def samples():
         'Sample Register',
         'A register of Samples',
         items,
-        ['http://pid.geoscience.gov.au/def/ont/igsn#Sample'],
-        no_of_samples
+        [conf.URI_SAMPLE_CLASS],
+        no_of_items
     )
 
     return r.render()
 
 
-def _get_samples_items(page, per_page):
+def _get_items(page, per_page, elem_tag):
     items = []
-    r = requests.get(conf.XML_API_URL_SAMPLESET.format(page, per_page), timeout=3)
+
+    r = None
+    if elem_tag == 'IGSN':
+        r = requests.get(conf.XML_API_URL_SAMPLESET.format(page, per_page), timeout=3)
+    elif elem_tag == 'ENO':
+        r = requests.get(conf.XML_API_URL_SITESET.format(page, per_page), timeout=3)
+    else:
+        print('Invalid tag')
+        return None
+
     xml = r.content
 
     parser = etree.XMLParser(dtd_validation=False)
@@ -95,10 +105,48 @@ def _get_samples_items(page, per_page):
         xml = BytesIO(xml)
 
         for event, elem in etree.iterparse(xml):
-            if elem.tag == "IGSN":
+            # if elem.tag == "IGSN":
+            #     items.append(elem.text)
+            # elif elem.tag == "ENO":
+            #     items.append(elem.text)
+            if elem.tag == elem_tag:
                 items.append(elem.text)
 
         return items
     except Exception:
         print('not valid xml')
         return None
+
+
+@classes.route('/site/register')
+def sites():
+    # get the total register count for site
+    try:
+        r = requests.get(conf.XML_API_URL_SITES_TOTAL_COUNT)
+        no_of_items = int(r.content.decode('utf-8').split('<RECORDS>')[1].split('</RECORDS>')[0])
+        # no_of_items =
+
+        page = request.values.get('page') if request.values.get('page') is not None else 1
+        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 15
+        items = _get_items(page, per_page, "ENO")
+    except Exception as e:
+        print(e)
+        return Response('The Site Register is offline', mimetype='text/plain', status=500)
+
+    r = pyldapi.RegisterRenderer(
+        request,
+        request.url,
+        'Site Register',
+        'A register of Sites',
+        items,
+        [conf.URI_SITE_CLASS],
+        no_of_items
+    )
+
+    return r.render()
+
+
+@classes.route('/site/<string:site_no>')
+def site(site_no):
+    s = SiteRenderer(request, conf.URI_SITE_INSTANCE_BASE + site_no, site_no)
+    return s.render()
