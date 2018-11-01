@@ -308,7 +308,9 @@ class SampleRenderer(Renderer):
         # if self.sample_no is None:
         #     return Response('Sample with IGSN {} not found.'.format(self.igsn), status=404, mimetype='text/plain')
 
-        if self.view == 'igsn-o':
+        if self.view == 'alternates':
+            return self._render_alternates_view()
+        elif self.view == 'igsn-o':
             if self.format == 'text/html':
                 return self.export_html(model_view=self.view)
             else:

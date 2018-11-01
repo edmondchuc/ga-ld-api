@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Linked Data API</h1>
+    <p>This is the home page of GA's Linked Data <a href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a> of <b>Samples</b>, <b>Sites</b> and <b>Surveys</b>. View the registers for the three categories in the navigation bar at the top of the page.</p>
+
+    <!--<hr>-->
+
+    <h2>Sample</h2>
+    <p>This system provides landing pages for GA's samples, resolving with the use of <a href="http://www.igsn.org/">International GeoSample Number identifiers</a>. Multiple <a href="https://en.wikipedia.org/wiki/Linked_data">Linked Data</a> <em>views</em> of each sample's metadata according to several relevant models such as the IGSN model, <a href="https://www.w3.org/TR/prov-o/">PROV-O</a> and <a href="http://dublincore.org/">Dublin Core</a> are available in this system. </p>
+    <p>There are two methods of access to GA's samples' metadata that this API delivers:</p>
+    <ol>
+        <li><strong>Linked Data</strong> - human and machine readable resources (web pages &amp; RDF data) for the Register of samples and each Sample</li>
+        <li><strong>OAI-PMH</strong> - <a href="https://www.openarchives.org/pmh/">Open Archives Initiative - Protocol for Metadata Harvesting</a>: an HTTP API for harvesting metadata for objects in XML. This form of access is a requirement of the IGSN community</li>
+    </ol>
+    <p>The endpoints for these two forms of access are given in the links at the top of the page in the navigation bar.</p>
+
+    <!--<hr>-->
+
+    <h2>Site</h2>
+    <p>This system provides landing pages for digital catalogue record sites utilised by GA. It contains views according to models such as the National Environmental Monitoring Sites Register and the Geoscience Australia's Public Data Model ontology.</p>
+    <!--<p>The method of accessing GA's Sites metadata is its <b>Linked Data</b> API.</p>-->
+    <!--<hr>-->
+
+    <h2>Surveys</h2>
+    <p>This system provides the landing pages for metadata about Surveys stored in GA's corporate database known as ARGUS. It contains views according to models such as GA'S ARGUS, GA'S Public Data Model, PROV-O and the Semantic Sensor Network Ontology.</p>
+
+    <h2>OGC WMS Web Service</h2>
+
+    <p>While this web page describes this system for a human to read, it's not so good for machines, so we also provide a machine-readable version. We have implemented, as a test, an <a href="http://www.opengeospatial.org/">OGC</a> <a href="http://www.opengeospatial.org/standards/wms">WMS web service</a>'s <em>GetCapabilities</em> function which:</p>
+    <blockquote><em>Retrieves metadata about the service, including supported operations and parameters</em></blockquote>
+    <p>To view the <em>GetCapabilities</em> function results for this API, see:</p>
+    <ul>
+        <li><a href="{{ url_for('controller.index') }}?_view=getcapabilities&_format=text/xml">{{ url_for('controller.index') }}?_view=getcapabilities&_format=text/xml</a></li>
+    </ul>
+{% endblock %}
