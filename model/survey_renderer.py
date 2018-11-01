@@ -471,8 +471,10 @@ class SurveyRenderer(Renderer):
             g.add((geometry, GEOSP.asWKT, Literal(self.wkt_polygon, datatype=GEOSP.wktLiteral)))
             g.add((sample, GEOSP.hasGeometry, geometry))  # associate
 
-        return self._make_rdf_response(g, mimetype=rdf_mime)
-        # return g.serialize(format=LDAPI.get_rdf_parser_for_mimetype(rdf_mime))
+        return g.serialize(format=self._get_rdf_mimetype(rdf_mime))
+
+    def _get_rdf_mimetype(self, rdf_mime):
+        return self.RDF_SERIALIZER_MAP[rdf_mime]
 
     # TODO: split these RDF --> SVG parts into a stand-alone module
     def __graph_preconstruct(self, g):

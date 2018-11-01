@@ -9,6 +9,7 @@ from rdflib import Graph, URIRef, RDF, RDFS, XSD, OWL, Namespace, Literal, BNode
 import _config as conf
 from controller.oai_datestamp import *
 from .lookups import TERM_LOOKUP
+from _ldapi import LDAPI
 
 
 class SampleRenderer(Renderer):
@@ -908,8 +909,10 @@ class SampleRenderer(Renderer):
                 g.add((qualified_attribution2, PROV.hadRole, AUROLE.principalInvestigator))
                 g.add((this_sample, PROV.qualifiedAttribution, qualified_attribution2))
 
-        return self._make_rdf_response(g, mimetype=rdf_mime)
-        # return g.serialize(format=LDAPI.get_rdf_parser_for_mimetype(rdf_mime))
+        return g.serialize(format=self._get_rdf_mimetype(rdf_mime))
+
+    def _get_rdf_mimetype(self, rdf_mime):
+        return self.RDF_SERIALIZER_MAP[rdf_mime]
 
     def _is_xml_export_valid(self, xml_string):
         """
