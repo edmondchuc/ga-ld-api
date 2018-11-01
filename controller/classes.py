@@ -10,6 +10,7 @@ import requests
 from io import BytesIO
 from lxml import etree
 from model.site_renderer import SiteRenderer
+from model.survey_renderer import SurveyRenderer
 
 classes = Blueprint('classes', __name__)
 
@@ -92,6 +93,8 @@ def _get_items(page, per_page, elem_tag):
         r = requests.get(conf.XML_API_URL_SAMPLESET.format(page, per_page), timeout=3)
     elif elem_tag == 'ENO':
         r = requests.get(conf.XML_API_URL_SITESET.format(page, per_page), timeout=3)
+    elif elem_tag == 'SURVEYID':
+        r = requests.get(conf.XML_API_URL_SURVEY_REGISTER.format(page, per_page), timeout=3)
     else:
         print('Invalid tag')
         return None
@@ -105,10 +108,6 @@ def _get_items(page, per_page, elem_tag):
         xml = BytesIO(xml)
 
         for event, elem in etree.iterparse(xml):
-            # if elem.tag == "IGSN":
-            #     items.append(elem.text)
-            # elif elem.tag == "ENO":
-            #     items.append(elem.text)
             if elem.tag == elem_tag:
                 items.append(elem.text)
 
@@ -149,4 +148,34 @@ def sites():
 @classes.route('/site/<string:site_no>')
 def site(site_no):
     s = SiteRenderer(request, conf.URI_SITE_INSTANCE_BASE + site_no, site_no)
+    return s.render()
+
+
+@classes.route('/survey/register')
+def surveys():
+    # get the total register count for survey
+    try:
+        no_of_items = 9200 #TODO: implement a survey count in Oracle XML API
+        page = 1
+        per_page = 15
+        items = _get_items(page, per_page, "SURVEYID")
+    except Exception as e:
+        print(e)
+        return Response('The Survey Register is offline', mimetype='text/plain', status=500)
+
+    r = pyldapi.RegisterRenderer(
+        request,
+        request.url,
+        'Survey Register',
+        'A register of Surveys',
+        items,
+        [conf.BASE_URI_SURVEY],
+        no_of_items
+    )
+    return r.render()
+
+
+@classes.route('/survey/<string:survey_id>')
+def survey(survey_id):
+    s = SurveyRenderer(request, conf.BASE_URI_SURVEY + survey_id, survey_id)
     return s.render()
