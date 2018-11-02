@@ -1,3 +1,5 @@
+This repository has been moved to [here](https://github.com/CSIRO-enviro-informatics/sss-api).
+
 # Sample, Site, Survey (SSS) API
 This is an API consolidated from:
 * https://github.com/GeoscienceAustralia/samples-api
