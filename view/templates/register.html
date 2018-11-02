@@ -3,12 +3,15 @@
         {% block content %}
         <h1>{{ label }}</h1>
         <h2>Register View</h2>
-        <h3>Classes of item in this Register:</h3>
-        <ul>
+        <!--<h3>Classes of item in this Register:</h3>-->
         {% for class in contained_item_classes %}
-            <li><a href="{{ class }}">{{ class }}</a></li>
-        {%  endfor %}
-        </ul>
+            <span><h3>Of <a href="{{ class }}">{{ class }}</a> class items</h3></span>
+        {% endfor %}
+        <!--<ul>-->
+        <!--{% for class in contained_item_classes %}-->
+            <!--<li><a href="{{ class }}">{{ class }}</a></li>-->
+        <!--{%  endfor %}-->
+        <!--</ul>-->
         <table>
             <tr>
                 <td style="vertical-align:top; width:500px;">
@@ -16,9 +19,9 @@
                     <ul>
                     {%- for item in register_items -%}
                         {%- if item is not string %}
-                        <li><a href="{{ item[0] }}">{{ item[1] }}</a></li>
+                        <li class="no-line-height"><a href="{{ item[0] }}">{{ item[1] }}</a></li>
                         {%- else %}
-                        <li><a href="{{ item }}">{{ item.split('#')[-1].split('/')[-1] }}</a></li>
+                        <li class="no-line-height"><a href="{{ item }}">{{ item.split('#')[-1].split('/')[-1] }}</a></li>
                         {%- endif %}
                     {%- endfor -%}
                     </ul>
