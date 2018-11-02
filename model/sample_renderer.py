@@ -350,6 +350,7 @@ class SampleRenderer(Renderer):
         return Response(
             render_template(
                 self.alternates_template or 'alternates.html',
+                register_name='Sample Register',
                 class_uri=self.uri,
                 instance_uri=conf.URI_SAMPLE_INSTANCE_BASE + self.igsn,
                 default_view_token=self.default_view_token,

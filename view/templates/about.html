@@ -2,35 +2,33 @@
 
 {% block content %}
 
-<h1>About - Linked Data API</h1>
+<h1>Linked Data API</h1>
 
+<h2>About</h2>
 <p>This <a href="https://en.wikipedia.org/wiki/Application_programming_interface">Application Programming Interface</a> (API) is designed to provide access to GA's Samples, Sites and Surveys Database. GA has over 3 million samples that are each identified by an <a href="https://en.wikipedia.org/wiki/International_Geo_Sample_Number">International Geo Sample Number for Samples</a>, a digital catalogue record of sites used by GA and its Surveys stored in an ARGUS database.</p>
 
 <h2>Usage</h2>
-<p>This API is a <a href="https://en.wikipedia.org/wiki/Linked_data">Linked Data</a> API in that it provides information about Samples and the list of Samples (the Sample Register) according to Linked Data principles. These include the principles that data items should be identified with persistent <a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI</a>s and that information should be provided in both human-readable and machine-readable formats. To these ends, this Linked Data API resolves URIs for Samples of the following form: <p><code>http://pid.geoscience.gov.au/sample/{IGSN}</code></p> where GA's base persistent URI is used (<code>http://pid.geoscience.gov.au</code>), the <code>sample</code> class of item is indicated and the individual sample is identified by its IGSN.</p>
+<p>This API is a <a href="https://en.wikipedia.org/wiki/Linked_data">Linked Data</a> API in that it provides information about Samples and the list of Samples (the Sample Register) according to Linked Data principles. These include the principles that data items should be identified with persistent <a href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI</a>s and that information should be provided in both human-readable and machine-readable formats. To these ends, this Linked Data API resolves URIs for Samples of the following form:
+
+<h3>Sample</h3>
+<p><code>http://pid.geoscience.gov.au/sample/{IGSN}</code></p> where GA's base persistent URI is used (<code>http://pid.geoscience.gov.au</code>), the <code>sample</code> class of item is indicated and the individual sample is identified by its IGSN.</p>
+
+<h3>Site</h3>
 <p>This Linked Data API resolves for Sites used by the GA with the following form: <p><code>http://pid.geoscience.gov.au/site/{SITE_NO}</code>.</p></p>
+
+<h3>Survey</h3>
 <p>This Linked Data API resolves for Surveys from the ARGUS database with the following form:<p><code>http://pid.geoscience.gov.au/survey/ga/{SURVEY_NO}</code>.</p></p>
 
 <h2>Views</h2>
 
-<p>This API uses the generic GA Linked Data API to handle the model views and formats of objects. <em>A link to this generic API will be given here soon!</em></p>
+<p>This API uses the the <a href="https://github.com/RDFLib/pyLDAPI">pyLDAPI</a>, a tool to deliver APIs in Linked Data.
+
+<h2>Contact</h2>
+<p>The code for this application is available at: <p><em>Coming soon!</em></p></p>
 
 <h2>Contact</h2>
 <p>To contact the people who built and maintain this API, please email <code>dataman@ga.gov.au</code>.</p>
 
-<p>
-    Lead Developer:<br>
-    <b>Nicholas Car</b><br>
-    <em>Data Architect</em><br>
-    CSIRO Land & Water, Environmental Informatics Group<br>
-    <a href="mailto:nicholas.car@csiro.au">nicholas.car@csiro.au</a>
-</p>
 
-<p>
-    Software Developer:<br>
-    <b>Edmond Chuc</b><br>
-    CSIRO Land & Water, Environmental Informatics Group<br>
-    <a href="mailto:edmond.chuc@csiro.au">edmond.chuc@csiro.au</a>
-</p>
 
 {% endblock %}

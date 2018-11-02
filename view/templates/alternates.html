@@ -1,11 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>SSS Linked Data API</h1>
+    <h1>{{ register_name }} Linked Data API</h1>
     {% if class_uri %}
         <h3>Alternates view of a <a href="{{ class_uri }}">{{ class_uri }}</a></h3>
-    {% elif uri %}
-        <h3>Alternates view of a <a href="{{ uri }}">{{ uri }}</a></h3>
     {% else %}
         <h3>Alternates view</h3>
     {% endif %}

@@ -135,6 +135,7 @@ class SurveyRenderer(Renderer):
         return Response(
             render_template(
                 self.alternates_template or 'alternates.html',
+                register_name='Survey Register',
                 class_uri=self.uri,
                 instance_uri=conf.BASE_URI_SURVEY + self.survey_id,
                 default_view_token=self.default_view_token,

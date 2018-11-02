@@ -51,7 +51,7 @@ def sample_pingback(igsn):
         )
 
 
-@classes.route('/sample/register')
+@classes.route('/sample/')
 def samples():
     """
     The Register of Samples
@@ -65,7 +65,7 @@ def samples():
         no_of_items = int(r.content.decode('utf-8').split('<RECORD_COUNT>')[1].split('</RECORD_COUNT>')[0])
 
         page = request.values.get('page') if request.values.get('page') is not None else 1
-        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 15
+        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 20
         items = _get_items(page, per_page, "IGSN")
 
     except Exception as e:
@@ -117,7 +117,7 @@ def _get_items(page, per_page, elem_tag):
         return None
 
 
-@classes.route('/site/register')
+@classes.route('/site/')
 def sites():
     # get the total register count for site
     try:
@@ -126,7 +126,7 @@ def sites():
         # no_of_items =
 
         page = request.values.get('page') if request.values.get('page') is not None else 1
-        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 15
+        per_page = request.values.get('per_page') if request.values.get('per_page') is not None else 20
         items = _get_items(page, per_page, "ENO")
     except Exception as e:
         print(e)
@@ -151,13 +151,13 @@ def site(site_no):
     return s.render()
 
 
-@classes.route('/survey/register')
+@classes.route('/survey/')
 def surveys():
     # get the total register count for survey
     try:
         no_of_items = 9200 #TODO: implement a survey count in Oracle XML API
         page = 1
-        per_page = 15
+        per_page = 20
         items = _get_items(page, per_page, "SURVEYID")
     except Exception as e:
         print(e)

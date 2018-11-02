@@ -246,6 +246,7 @@ class SiteRenderer(Renderer):
             render_template(
                 self.alternates_template or 'alternates.html',
                 instance_uri=self.uri,
+                register_name='Site Register',
                 class_uri=self.site_type,
                 default_view_token=self.default_view_token,
                 views=self.views
