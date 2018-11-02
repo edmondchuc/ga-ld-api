@@ -22,7 +22,7 @@ def sample(igsn):
 
     :return: HTTP Response
     """
-    s = SampleRenderer(request, conf.URI_SAMPLE_INSTANCE_BASE + igsn, igsn)
+    s = SampleRenderer(request, conf.URI_SAMPLE_CLASS, igsn)
     return s.render()
 
 
@@ -177,5 +177,5 @@ def surveys():
 
 @classes.route('/survey/<string:survey_id>')
 def survey(survey_id):
-    s = SurveyRenderer(request, conf.BASE_URI_SURVEY + survey_id, survey_id)
+    s = SurveyRenderer(request, conf.URI_SURVEY_CLASS, survey_id)
     return s.render()

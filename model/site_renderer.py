@@ -231,14 +231,27 @@ class SiteRenderer(Renderer):
     def render(self):
         if self.site_no is None:
             return Response('Site {} not found.'.format(self.site_no), status=404, mimetype='text/plain')
-
-        if self.view == 'pdm':
+        if self.view == 'alternates':
+            return self._render_alternates_view()
+        elif self.view == 'pdm':
             if self.format == 'text/html':
                 return self.export_html(model_view=self.view)
             else:
                 return Response(self.export_rdf(self.view, self.format), mimetype=self.format)
         elif self.view == 'nemsr':
             return self.export_nemsr_geojson()
+
+    def _render_alternates_view_html(self):
+        return Response(
+            render_template(
+                self.alternates_template or 'alternates.html',
+                instance_uri=self.uri,
+                class_uri=self.site_type,
+                default_view_token=self.default_view_token,
+                views=self.views
+            ),
+            headers=self.headers
+        )
 
     def _make_geojson_geometry(self):
         if self.geometry_type == 'Point':

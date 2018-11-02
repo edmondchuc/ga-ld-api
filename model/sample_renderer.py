@@ -346,6 +346,18 @@ class SampleRenderer(Renderer):
         elif self.view == 'sosa':  # RDF only for this view
             return Response(self.export_rdf(self.view, self.format), mimetype=self.format)
 
+    def _render_alternates_view_html(self):
+        return Response(
+            render_template(
+                self.alternates_template or 'alternates.html',
+                class_uri=self.uri,
+                instance_uri=conf.URI_SAMPLE_INSTANCE_BASE + self.igsn,
+                default_view_token=self.default_view_token,
+                views=self.views
+            ),
+            headers=self.headers
+        )
+
     def _generate_sample_wkt(self):
         if self.z is not None:
             return '<http://www.opengis.net/def/crs/EPSG/0/4283> POINTZ({} {} {})'.format(self.x, self.y,

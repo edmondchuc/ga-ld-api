@@ -114,8 +114,9 @@ class SurveyRenderer(Renderer):
     def render(self):
         if self.survey_name is None:
             return Response('Survey with ID {} not found.'.format(self.survey_id), status=404, mimetype='text/plain')
-
-        if self.view == 'gapd':
+        if self.view == "alternates":
+            return self._render_alternates_view()
+        elif self.view == 'gapd':
             if self.format == 'text/html':
                 return self.export_html(model_view=self.view)
             else:
@@ -129,6 +130,18 @@ class SurveyRenderer(Renderer):
                 return Response(self.export_rdf(self.view, self.format), mimetype=self.format)
         elif self.view == 'sosa':  # RDF only for this controller
             return Response(self.export_rdf(self.view, self.format), mimetype=self.format)
+
+    def _render_alternates_view_html(self):
+        return Response(
+            render_template(
+                self.alternates_template or 'alternates.html',
+                class_uri=self.uri,
+                instance_uri=conf.BASE_URI_SURVEY + self.survey_id,
+                default_view_token=self.default_view_token,
+                views=self.views
+            ),
+            headers=self.headers
+        )
 
     def validate_xml(self, xml):
         parser = etree.XMLParser(dtd_validation=False)

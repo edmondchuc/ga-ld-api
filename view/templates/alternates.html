@@ -1,32 +1,38 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Alternates view</h1>
-    <h2>Alternates view of a <a href="{{ class_uri_encoded }}">{{ class_uri }}</a></h2>
-    {% if instance_uri %}
-        <h3>Instance <a href="{{ instance_uri_encoded }}">{{ instance_uri }}</a></h3>
+    <h1>SSS Linked Data API</h1>
+    {% if class_uri %}
+        <h3>Alternates view of a <a href="{{ class_uri }}">{{ class_uri }}</a></h3>
+    {% elif uri %}
+        <h3>Alternates view of a <a href="{{ uri }}">{{ uri }}</a></h3>
+    {% else %}
+        <h3>Alternates view</h3>
     {% endif %}
-    <p>Default view: <a href="{{ request.base_url }}?_view={{ views['default'] }}">{{ views['default'] }}</a></p>
+    {% if instance_uri %}
+        <h3>Instance <a href="{{ instance_uri }}">{{ instance_uri }}</a></h3>
+    {% endif %}
+    <p></p>
     <table class="pretty">
-        <tr>
-            <th>View</th>
-            <th>Formats</th>
-            <th>Namespace</th>
-            <th>Description</th>
-        </tr>
+    <tr><th>View</th><th>Formats</th><th>View Desc.</th><th>View Namespace</th></tr>
     {% for v, vals in views.items() %}
-        {% if v != 'default' %}
+        {% if v == default_view_token %}
+            <tr><td>default</td><td><a href="{{ request.base_url }}?_view={{ v }}">{{ v }}</a></td><td></td><td></td></tr>
+        {% else %}
             <tr>
                 <td><a href="{{ request.base_url }}?_view={{ v }}">{{ v }}</a></td>
                 <td>
-                {% for f in vals['mimetypes'] %}
-                    <a href="{{ request.base_url }}?_view={{ v }}&_format={{ f }}">{{ f }}</a><br />
+                {% for f in vals['formats'] %}
+                    <a href="{{ request.base_url }}?_view={{ v }}&_format={{ f }}">{{ f }}</a>
+                    {% if loop.index != vals['formats']|length %}<br />{% endif %}
                 {% endfor %}
                 </td>
-                <td><a href="{{ vals['namespace'] }}">{{ vals['namespace'] }}</a></td>
-                <td>{{ vals['description'] }}</td>
+                <td>{{ vals['namespace'] }}</td>
+                <td>{{ vals['comment'] }}</td>
             </tr>
         {% endif %}
     {% endfor %}
     </table>
+
+
 {% endblock %}

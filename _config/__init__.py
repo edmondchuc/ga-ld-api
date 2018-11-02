@@ -60,8 +60,8 @@ XML_API_URL_SITES_TOTAL_COUNT_DATE_RANGE = 'http://dbforms.ga.gov.au/www/a.entit
 URI_NETWORK_CLASS = 'http://pid.geoscience.gov.au/def/ont/ga/pdm#SiteNetwork'
 URI_NETWORK_INSTANCE_BASE = 'http://pid.geoscience.gov.au/network/'
 URI_SITE_CLASS = 'http://pid.geoscience.gov.au/def/ont/ga/pdm#Site'
-URI_SITE_INSTANCE_BASE = 'http://localhost:5000/site/'
-
+# URI_SITE_INSTANCE_BASE = 'http://localhost:5000/site/'
+URI_SITE_INSTANCE_BASE = 'http://pid.geoscience.gov.au/site/ga/'
 
 #
 # surveys
@@ -71,6 +71,7 @@ XML_API_URL_SURVEY_REGISTER = 'http://dbforms.ga.gov.au/www/argus.argus_api.Sear
 XML_API_URL_SURVEY = 'http://dbforms.ga.gov.au/www/argus.argus_api.survey?pSurveyNo={}'
 
 BASE_URI_SURVEY = 'http://pid.geoscience.gov.au/survey/ga/'
+URI_SURVEY_CLASS = 'http://pid.geoscience.gov.au/def/ont/ga/testing#Survey'
 
 XML_API = {
     'ENTITIES': {
